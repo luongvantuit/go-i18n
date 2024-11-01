@@ -8,9 +8,11 @@ import (
 )
 
 type I18nConfigOptions struct {
-	Dir       string
-	Fallback  language.Tag
-	Namespace string
+	Dir              string
+	FileType         I18nTranslationFileType
+	Fallback         language.Tag
+	UseNamespace     bool
+	DefaultNamespace string
 }
 
 type I18nConfigOptionsBuilder struct {
@@ -31,6 +33,9 @@ func I18nConfig() *I18nConfigOptionsBuilder {
 
 		args.Dir = filepath.Join(defaultDir, "i18n")
 
+		// Set default file type
+		args.FileType = FileTypeJSON
+
 		return nil
 	})
 
@@ -46,4 +51,59 @@ func (i *I18nConfigOptionsBuilder) SetDir(dir string) *I18nConfigOptionsBuilder 
 	})
 
 	return i
+}
+
+func (i *I18nConfigOptionsBuilder) SetFileType(fileType I18nTranslationFileType) *I18nConfigOptionsBuilder {
+
+	i.Opts = append(i.Opts, func(args *I18nConfigOptions) error {
+		args.FileType = fileType
+		return nil
+	})
+
+	return i
+}
+
+func (i *I18nConfigOptionsBuilder) SetFallback(fallback language.Tag) *I18nConfigOptionsBuilder {
+
+	i.Opts = append(i.Opts, func(args *I18nConfigOptions) error {
+		args.Fallback = fallback
+		return nil
+	})
+
+	return i
+}
+
+func (i *I18nConfigOptionsBuilder) SetUseNamespace(useNamespace bool) *I18nConfigOptionsBuilder {
+
+	i.Opts = append(i.Opts, func(args *I18nConfigOptions) error {
+		args.UseNamespace = useNamespace
+		return nil
+	})
+
+	return i
+}
+
+func (i *I18nConfigOptionsBuilder) SetDefaultNamespace(defaultNamespace string) *I18nConfigOptionsBuilder {
+
+	i.Opts = append(i.Opts, func(args *I18nConfigOptions) error {
+		args.DefaultNamespace = defaultNamespace
+		return nil
+	})
+
+	return i
+}
+
+func (i *I18nConfigOptionsBuilder) SetUseNamespaceWithDefaultNamespace(useNamespace bool, defaultNamespace string) *I18nConfigOptionsBuilder {
+
+	i.Opts = append(i.Opts, func(args *I18nConfigOptions) error {
+		args.UseNamespace = useNamespace
+		args.DefaultNamespace = defaultNamespace
+		return nil
+	})
+
+	return i
+}
+
+func (i *I18nConfigOptionsBuilder) List() []func(*I18nConfigOptions) error {
+	return i.Opts
 }

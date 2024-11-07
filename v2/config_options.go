@@ -9,7 +9,7 @@ import (
 
 type I18nConfigOptions struct {
 	Dir              string
-	FileType         I18nTranslationFileType
+	FileType         FileType
 	Fallback         language.Tag
 	UseNamespace     bool
 	DefaultNamespace string
@@ -53,7 +53,7 @@ func (i *I18nConfigOptionsBuilder) SetDir(dir string) *I18nConfigOptionsBuilder 
 	return i
 }
 
-func (i *I18nConfigOptionsBuilder) SetFileType(fileType I18nTranslationFileType) *I18nConfigOptionsBuilder {
+func (i *I18nConfigOptionsBuilder) SetFileType(fileType FileType) *I18nConfigOptionsBuilder {
 
 	i.Opts = append(i.Opts, func(args *I18nConfigOptions) error {
 		args.FileType = fileType

@@ -12,7 +12,7 @@ type I18nProvider interface {
 
 type I18n struct {
 	Dir              string
-	FileType         I18nTranslationFileType
+	FileType         FileType
 	Fallback         language.Tag
 	UseNamespace     bool
 	DefaultNamespace string

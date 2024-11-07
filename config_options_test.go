@@ -3,7 +3,7 @@ package i18n_test
 import (
 	"testing"
 
-	"github.com/zeroxsolutions/go-i18n/v2"
+	"github.com/zeroxsolutions/go-i18n"
 )
 
 func TestI18nConfig_SetDir(t *testing.T) {
